@@ -3,7 +3,7 @@
 #include <stdlib.h>
 
 
-double * corr_2p(double pos_x[10001], double pos_y[10001], double pos_z[10001], int len_DD, int limit, int bin){
+double * corr_2p(int len_DD, double *pos_x, double *pos_y, double *pos_z, int limit, int bin){
 
   int i,j,k,l,r;
   double RR[len_DD][3];
@@ -73,6 +73,7 @@ double * corr_2p(double pos_x[10001], double pos_y[10001], double pos_z[10001], 
 
 int main(){
   FILE *file;
+  //int len = 3102;
   int len = 10000;
   double box_size = 50.0;
   int bining = 10;
@@ -92,13 +93,8 @@ int main(){
     /* code */
     fscanf(file,"%lf\t%lf\t%lf",&x[k],&y[k],&z[k]);
   }
-  //for (j=0; j<len; j++){
-  //    pos1[j]=x[j];
-  //    pos2[j]=y[j];
-  //    pos3[j]=z[j];
-  //  }
 
-  hist = corr_2p(x, y, z, len+1, box_size, bining);
+  hist = corr_2p(len+1, x, y, z, box_size, bining);
   for (i=0; i<bining; i++){
     printf("*(hist + %d) : %lf\n", i, *(hist+i));
   }
